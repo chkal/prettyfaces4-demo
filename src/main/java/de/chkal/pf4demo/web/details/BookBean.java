@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.ocpsoft.prettyfaces.annotation.Join;
+import org.ocpsoft.prettyfaces.annotation.MappingId;
 import org.ocpsoft.prettyfaces.annotation.ParameterBinding;
 import org.ocpsoft.prettyfaces.annotation.URLAction;
 
@@ -15,6 +16,7 @@ import de.chkal.pf4demo.web.utils.ResponseUtils;
 
 @Named
 @RequestScoped
+@MappingId("book")
 @Join(path = "/buch/{isbn}", to = "/faces/book.xhtml")
 public class BookBean {
 
@@ -47,7 +49,7 @@ public class BookBean {
 
         cartBean.addBook(book);
 
-        return "pretty:book";
+        return "rewrite:";
 
     }
 
