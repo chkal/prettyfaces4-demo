@@ -6,9 +6,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.ocpsoft.prettyfaces.annotation.Join;
-import org.ocpsoft.prettyfaces.annotation.ParameterBinding;
-import org.ocpsoft.prettyfaces.annotation.URLAction;
+import org.ocpsoft.rewrite.annotation.Join;
+import org.ocpsoft.rewrite.annotation.Parameter;
+import org.ocpsoft.rewrite.annotation.RequestAction;
+import org.ocpsoft.rewrite.faces.annotation.Deferred;
 
 import de.chkal.pf4demo.dao.BookDao;
 import de.chkal.pf4demo.dao.CategoryDao;
@@ -19,45 +20,51 @@ import de.chkal.pf4demo.web.utils.ResponseUtils;
 @Named
 @RequestScoped
 @Join(path = "/category/{seoKey}", to = "/faces/category.xhtml")
-public class CategoryBean {
+public class CategoryBean
+{
 
-    @ParameterBinding
-    private String seoKey;
+   @Parameter
+   private String seoKey;
 
-    @Inject
-    private CategoryDao categoryDao;
+   @Inject
+   private CategoryDao categoryDao;
 
-    @Inject
-    private BookDao bookDao;
+   @Inject
+   private BookDao bookDao;
 
-    private List<Book> books;
+   private List<Book> books;
 
-    @URLAction
-    public String loadData() {
+   @RequestAction
+   @Deferred
+   public String loadData()
+   {
 
-        Category category = categoryDao.getBySeoKey(seoKey);
+      Category category = categoryDao.getBySeoKey(seoKey);
 
-        if (category == null) {
-            ResponseUtils.sendError(404);
-            return null;
-        }
+      if (category == null) {
+         ResponseUtils.sendError(404);
+         return null;
+      }
 
-        books = bookDao.findByCategory(category);
+      books = bookDao.findByCategory(category);
 
-        return null;
+      return null;
 
-    }
+   }
 
-    public List<Book> getBooks() {
-        return books;
-    }
+   public List<Book> getBooks()
+   {
+      return books;
+   }
 
-    public String getSeoKey() {
-        return seoKey;
-    }
+   public String getSeoKey()
+   {
+      return seoKey;
+   }
 
-    public void setSeoKey(String seoKey) {
-        this.seoKey = seoKey;
-    }
+   public void setSeoKey(String seoKey)
+   {
+      this.seoKey = seoKey;
+   }
 
 }

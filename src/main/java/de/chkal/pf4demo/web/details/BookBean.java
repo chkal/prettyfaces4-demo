@@ -4,10 +4,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.ocpsoft.prettyfaces.annotation.Join;
-import org.ocpsoft.prettyfaces.annotation.MappingId;
-import org.ocpsoft.prettyfaces.annotation.ParameterBinding;
-import org.ocpsoft.prettyfaces.annotation.URLAction;
+import org.ocpsoft.rewrite.annotation.Join;
+import org.ocpsoft.rewrite.annotation.Parameter;
+import org.ocpsoft.rewrite.annotation.RequestAction;
+import org.ocpsoft.rewrite.annotation.Rule;
+import org.ocpsoft.rewrite.faces.annotation.Deferred;
 
 import de.chkal.pf4demo.dao.BookDao;
 import de.chkal.pf4demo.model.Book;
@@ -16,53 +17,60 @@ import de.chkal.pf4demo.web.utils.ResponseUtils;
 
 @Named
 @RequestScoped
-@MappingId("book")
+@Rule("book")
 @Join(path = "/buch/{isbn}", to = "/faces/book.xhtml")
-public class BookBean {
+public class BookBean
+{
 
-    @ParameterBinding
-    private Long isbn;
+   @Parameter
+   private Long isbn;
 
-    private Book book;
+   private Book book;
 
-    @Inject
-    private BookDao bookDao;
+   @Inject
+   private BookDao bookDao;
 
-    @Inject
-    private Cart cartBean;
+   @Inject
+   private Cart cartBean;
 
-    @URLAction
-    public String loadData() {
+   @RequestAction
+   @Deferred
+   public String loadData()
+   {
 
-        book = bookDao.getByIsbn(isbn);
+      book = bookDao.getByIsbn(isbn);
 
-        if (book == null) {
-            ResponseUtils.sendError(404);
-            return null;
-        }
+      if (book == null) {
+         ResponseUtils.sendError(404);
+         return null;
+      }
 
-        return null;
+      return null;
 
-    }
+   }
 
-    public String addToCart() {
+   public String addToCart()
+   {
 
-        cartBean.addBook(book);
+      cartBean.addBook(book);
 
-        return "rewrite:";
+      return "rewrite:";
 
-    }
+   }
 
-    public Long getIsbn() {
-        return isbn;
-    }
+   public Long getIsbn()
+   {
+      return isbn;
+   }
 
-    public void setIsbn(Long isbn) {
-        this.isbn = isbn;
-    }
+   public void setIsbn(Long isbn)
+   {
+      this.isbn = isbn;
+   }
 
-    public Book getBook() {
-        return book;
-    }
+   public Book getBook()
+   {
+      return book;
+   }
 
 }

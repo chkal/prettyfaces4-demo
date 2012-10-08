@@ -12,22 +12,26 @@ import de.chkal.pf4demo.model.Book;
 
 @Named
 @SessionScoped
-public class Cart implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
-    private List<Book> books = new ArrayList<Book>();
-    
-    public void addBook(Book book) {
-        books.add(book);
-    }
+public class Cart implements Serializable
+{
 
-    public List<Book> getBooks() {
-        return Collections.unmodifiableList(books);
-    }
-    
-    public int getNumberOfBooks() {
-        return books.size();
-    }
+   private static final long serialVersionUID = 1L;
+
+   private List<Book> books = new ArrayList<Book>();
+
+   public void addBook(Book book)
+   {
+      books.add(book);
+   }
+
+   public List<Book> getBooks()
+   {
+      return Collections.unmodifiableList(books);
+   }
+
+   public int getNumberOfBooks()
+   {
+      return books.size();
+   }
 
 }

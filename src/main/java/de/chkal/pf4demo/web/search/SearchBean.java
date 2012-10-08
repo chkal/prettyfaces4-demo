@@ -6,9 +6,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.ocpsoft.prettyfaces.annotation.Join;
-import org.ocpsoft.prettyfaces.annotation.QueryParameterBinding;
-import org.ocpsoft.prettyfaces.annotation.URLAction;
+import org.ocpsoft.rewrite.annotation.Join;
+import org.ocpsoft.rewrite.annotation.Parameter;
+import org.ocpsoft.rewrite.annotation.RequestAction;
+import org.ocpsoft.rewrite.faces.annotation.Deferred;
 
 import de.chkal.pf4demo.dao.BookDao;
 import de.chkal.pf4demo.model.Book;
@@ -16,33 +17,39 @@ import de.chkal.pf4demo.model.Book;
 @Named
 @RequestScoped
 @Join(path = "/search", to = "/faces/search.xhtml")
-public class SearchBean {
+public class SearchBean
+{
 
-    @QueryParameterBinding("q")
-    private String query;
+//   @Parameter("q")
+   private String query;
 
-    private List<Book> books;
+   private List<Book> books;
 
-    @Inject
-    private BookDao bookDao;
+   @Inject
+   private BookDao bookDao;
 
-    @URLAction
-    public void search() {
-        if (query != null && query.trim().length() > 0) {
-            books = bookDao.findByQuery(query);
-        }
-    }
+   @RequestAction
+   @Deferred
+   public void search()
+   {
+      if (query != null && query.trim().length() > 0) {
+         books = bookDao.findByQuery(query);
+      }
+   }
 
-    public String getQuery() {
-        return query;
-    }
+   public String getQuery()
+   {
+      return query;
+   }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
+   public void setQuery(String query)
+   {
+      this.query = query;
+   }
 
-    public List<Book> getBooks() {
-        return books;
-    }
+   public List<Book> getBooks()
+   {
+      return books;
+   }
 
 }

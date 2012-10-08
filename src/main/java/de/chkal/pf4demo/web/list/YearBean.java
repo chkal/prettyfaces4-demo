@@ -11,29 +11,34 @@ import de.chkal.pf4demo.model.Book;
 
 @Named
 @RequestScoped
-public class YearBean {
+public class YearBean
+{
 
-    private Integer year;
+   private Integer year;
 
-    @Inject
-    private BookDao bookDao;
+   @Inject
+   private BookDao bookDao;
 
-    private List<Book> books;
+   private List<Book> books;
 
-    public void preRenderView() {
-        books = bookDao.findByYear(year);
-    }
+   public void preRenderView()
+   {
+      books = bookDao.findByYear(year);
+   }
 
-    public List<Book> getBooks() {
-        return books;
-    }
+   public List<Book> getBooks()
+   {
+      return books;
+   }
 
-    public Integer getYear() {
-        return year;
-    }
+   public Integer getYear()
+   {
+      return year;
+   }
 
-    public void setYear(Integer year) {
-        this.year = year;
-    }
+   public void setYear(Integer year)
+   {
+      this.year = year;
+   }
 
 }

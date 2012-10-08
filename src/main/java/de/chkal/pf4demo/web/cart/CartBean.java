@@ -6,41 +6,47 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.ocpsoft.prettyfaces.annotation.Join;
-import org.ocpsoft.prettyfaces.annotation.URLAction;
+import org.ocpsoft.rewrite.annotation.Join;
+import org.ocpsoft.rewrite.annotation.RequestAction;
+import org.ocpsoft.rewrite.faces.annotation.Deferred;
 
 import de.chkal.pf4demo.model.Book;
 
 @Named
 @RequestScoped
-@Join(path="/cart", to="/faces/cart.xhtml")
-public class CartBean {
+@Join(path = "/cart", to = "/faces/cart.xhtml")
+public class CartBean
+{
 
-    @Inject
-    private Cart cart;
+   @Inject
+   private Cart cart;
 
-    private List<Book> books;
+   private List<Book> books;
 
-    private float sum;
+   private float sum;
 
-    @URLAction
-    public void init() {
+   @RequestAction
+   @Deferred
+   public void init()
+   {
 
-        books = cart.getBooks();
+      books = cart.getBooks();
 
-        sum = 0.0f;
-        for (Book book : books) {
-            sum += book.getPrice();
-        }
+      sum = 0.0f;
+      for (Book book : books) {
+         sum += book.getPrice();
+      }
 
-    }
+   }
 
-    public List<Book> getBooks() {
-        return books;
-    }
+   public List<Book> getBooks()
+   {
+      return books;
+   }
 
-    public float getSum() {
-        return sum;
-    }
+   public float getSum()
+   {
+      return sum;
+   }
 
 }
