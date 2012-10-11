@@ -13,7 +13,8 @@
 
             <h:inputText value="#{searchBean.query}" styleClass="xlarge" />
                 
-            <h:commandButton value="Search" styleClass="btn primary" />
+            <h:commandButton value="Search" styleClass="btn primary"
+                action="#{searchBean.search}" />
 
          </h:form>
       </div>
