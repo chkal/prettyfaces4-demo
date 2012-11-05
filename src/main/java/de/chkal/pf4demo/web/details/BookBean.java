@@ -9,7 +9,7 @@ import org.ocpsoft.rewrite.annotation.Parameter;
 import org.ocpsoft.rewrite.annotation.RequestAction;
 import org.ocpsoft.rewrite.annotation.Rule;
 import org.ocpsoft.rewrite.faces.annotation.Deferred;
-import org.ocpsoft.urlbuilder.Address;
+import org.ocpsoft.rewrite.faces.navigate.Navigate;
 
 import de.chkal.pf4demo.dao.BookDao;
 import de.chkal.pf4demo.model.Book;
@@ -50,16 +50,13 @@ public class BookBean
 
    }
 
-   public String addToCart()
+   public Navigate addToCart()
    {
 
       cartBean.addBook(book);
 
-      return Address.begin()
-               .path("/faces/book.xhtml")
-               .query("faces-redirect", true)
-               .query("isbn", isbn)
-               .toString();
+      return Navigate.to(BookBean.class)
+               .with("isbn", isbn);
 
    }
 

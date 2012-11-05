@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.annotation.Parameter;
 import org.ocpsoft.rewrite.annotation.RequestAction;
-import org.ocpsoft.urlbuilder.Address;
+import org.ocpsoft.rewrite.faces.navigate.Navigate;
 
 import de.chkal.pf4demo.dao.BookDao;
 import de.chkal.pf4demo.model.Book;
@@ -28,12 +28,9 @@ public class SearchBean
    @Inject
    private BookDao bookDao;
 
-   public String search() {
-      return Address.begin()
-               .path("/faces/search.xhtml")
-               .query("faces-redirect", true)
-               .query("q", query)
-               .toString();
+   public Navigate search() {
+      return Navigate.to(SearchBean.class)
+               .with("q", query);
    }
    
    @RequestAction
